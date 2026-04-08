@@ -7,20 +7,17 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0f0f1a;color:#e5e5e5;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;overflow-x:hidden}
-.container{max-width:800px;margin:0 auto;padding:20px 16px 100px}
-.status-bar{text-align:center;margin-bottom:14px;font-size:11px;color:#444;display:flex;align-items:center;justify-content:center;gap:6px}
-.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
-.status-dot.ok{background:#22c55e}.status-dot.err{background:#ef4444}.status-dot.loading{background:#f59e0b;animation:pulse 1.5s infinite}
+.container{max-width:800px;margin:0 auto;padding:20px 16px 40px}
 
 /* Stat Cards */
 .stats-row{display:flex;gap:8px;margin-bottom:20px;width:100%}
-.stat-card{background:linear-gradient(135deg,#1e1e2e,#2a2a3e);border-radius:12px;padding:10px;flex:1 1 0%;min-width:0;overflow:hidden;position:relative}
+.stat-card{background:linear-gradient(135deg,#1e1e2e,#2a2a3e);border-radius:12px;padding:10px;flex:1 1 0%;min-width:0;overflow:hidden}
 .stat-label{color:#6b7280;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;white-space:nowrap}
 .stat-value{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stat-sub{color:#555;font-size:10px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* Table */
-.section-title{font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;cursor:default;user-select:none}
+.section-title{font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .table-wrap{background:#1a1a2a;border-radius:14px;border:1px solid #252535;overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{padding:10px;text-align:left;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;border-bottom:2px solid #333}
@@ -29,7 +26,6 @@ tr.data-row{border-bottom:1px solid #252535;transition:background .15s}
 tr.data-row:last-child{border-bottom:none}
 tr.data-row:hover{background:#222235}
 .empty-state{text-align:center;padding:48px 20px;color:#555}
-.empty-state svg{margin-bottom:12px;opacity:.3}
 
 /* Prize Rules */
 .rules-panel{background:#1a1a2a;border-radius:12px;border:1px solid #333;margin-top:24px;overflow:hidden}
@@ -44,103 +40,29 @@ tr.data-row:hover{background:#222235}
 .prize-table td:last-child{border-right:none}
 .prize-table tr:last-child td{border-bottom:none}
 
-/* Modals */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:1000;padding:24px}
-.modal-bottom .modal-overlay{align-items:flex-end;padding:16px}
-.modal-box{background:#1a1a2a;border-radius:20px;padding:28px;width:100%;max-width:360px;border:1px solid #333;text-align:center}
-.modal-sheet{background:#1a1a2a;border-radius:20px 20px 12px 12px;padding:24px;width:100%;max-width:480px;border:1px solid #333;max-height:90vh;overflow-y:auto}
-.pin-input{width:100%;padding:12px;background:#0f0f1a;border:1px solid #333;border-radius:10px;color:#fff;font-size:22px;text-align:center;outline:none;letter-spacing:8px}
-.pin-input.error{border-color:#ef4444;animation:shake .3s ease}
-.btn{width:100%;padding:12px;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
-.btn-primary{background:linear-gradient(135deg,#FC4C02,#e64400)}
-.btn-disabled{background:#333;cursor:not-allowed}
-
-/* FAB */
-.fab{position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FC4C02,#e64400);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(252,76,2,.4);transition:transform .2s,box-shadow .2s;z-index:999;font-size:28px;font-weight:300}
-.fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(252,76,2,.6)}
-
-/* OCR Progress */
-.ocr-progress{background:#1a1a2a;border-radius:16px;padding:32px;width:100%;max-width:360px;border:1px solid #333;text-align:center}
-.progress-bar{height:4px;background:#252535;border-radius:2px;margin:16px 0;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#FC4C02,#f59e0b);border-radius:2px;transition:width .3s}
-.ocr-status{font-size:13px;color:#6b7280}
-.ocr-result{margin-top:16px;text-align:left;background:#0f0f1a;border-radius:10px;padding:14px;border:1px solid #252535}
-.ocr-field{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
-.ocr-field-label{color:#6b7280}.ocr-field-value{color:#fff;font-weight:600}
-
-/* Add Run Button (inline, admin only) */
-.add-run-btn{margin-left:auto;background:linear-gradient(135deg,#FC4C02,#e64400);border:none;border-radius:8px;padding:5px 12px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit}
-
-/* Form fields */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-group label{display:block;font-size:11px;color:#6b7280;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.form-group input{width:100%;padding:10px 14px;background:#0f0f1a;border:1px solid #333;border-radius:8px;color:#e5e5e5;font-size:14px;outline:none;font-family:inherit}
-.form-group input:focus{border-color:#FC4C02}
-.form-full{grid-column:1/-1}
-
-/* Toast */
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:1100;box-shadow:0 4px 12px rgba(0,0,0,.3);animation:fadeInUp .3s ease}
-.toast.error{background:#ef4444}
-
-/* Footer */
 .footer{text-align:center;margin-top:24px;padding:16px 0;color:#333;font-size:12px}
-
-/* Animations */
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes fadeInUp{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 </style>
 </head>
 <body>
 
 <div class="container" id="app"></div>
-<div id="modals"></div>
-<input type="file" id="fileInput" accept="image/*" style="display:none">
 
 <script>
 // ============================================================
-// CONFIG
+// RUNS DATA — Add new runs here
 // ============================================================
-const SECRET_PIN = "5489";
-const JSONBLOB_API = "https://jsonblob.com/api/jsonBlob";
-const CLAUDE_API_KEY = "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";
-const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
-const INITIAL_RUNS = [
-  { id: 1, date: "2026-04-07", time: "18:24", distance: 3.55, pace: "6:07", duration: "21m 46s" }
+const RUNS = [
+  { id: 1, date: "2026-04-07", time: "18:24", distance: 3.55, pace: "6:07", duration: "21m 46s" },
 ];
-
-// ============================================================
-// STATE
-// ============================================================
-let state = {
-  runs: [],
-  blobId: null,
-  loading: true,
-  saving: false,
-  isAdmin: false,
-  tapCount: 0,
-  tapTimer: null,
-  rulesExpanded: false,
-  showPinModal: false,
-  showForm: false,
-  showOcr: false,
-  ocrProgress: 0,
-  ocrStatus: "",
-  ocrResult: null,
-  pinError: false,
-  toast: null,
-  connectionOk: true,
-};
 
 // ============================================================
 // STREAK & PRIZE CALCULATION
 // ============================================================
 function calculateStreaks(runs) {
   if (!runs.length) return [];
-  const sorted = [...runs].sort((a, b) => {
-    return new Date(a.date + "T" + (a.time || "00:00")) - new Date(b.date + "T" + (b.time || "00:00"));
-  });
+  const sorted = [...runs].sort((a, b) =>
+    new Date(a.date + "T" + (a.time || "00:00")) - new Date(b.date + "T" + (b.time || "00:00"))
+  );
   const result = [];
   let streak = 1;
   for (let i = 0; i < sorted.length; i++) {
@@ -167,326 +89,36 @@ function calculatePrize(dist, streak) {
 
 function streakColor(s) { return s > 10 ? "#f59e0b" : s > 5 ? "#f97316" : s > 2 ? "#ef4444" : "#6b7280"; }
 function streakEmoji(s) { return s > 10 ? "\u{1F525}\u{1F525}\u{1F525}" : s > 5 ? "\u{1F525}\u{1F525}" : s > 2 ? "\u{1F525}" : ""; }
-function fmtDate(d) { const dt = new Date(d + "T00:00:00"); return dt.getDate() + " " + dt.toLocaleDateString("en-IN",{month:"short"}); }
-
-// ============================================================
-// JSONBlob STORAGE
-// ============================================================
-function getBlobId() {
-  // Check URL hash first, then fallback
-  const hash = window.location.hash.replace("#", "");
-  if (hash && hash.length > 8) return hash;
-  return null;
-}
-
-async function loadFromBlob() {
-  const id = getBlobId();
-  if (!id) {
-    // No blob — use initial data
-    state.runs = [...INITIAL_RUNS];
-    state.loading = false;
-    state.connectionOk = false;
-    render();
-    return;
-  }
-  state.blobId = id;
-  try {
-    const res = await fetch(JSONBLOB_API + "/" + id, {
-      headers: { "Content-Type": "application/json" }
-    });
-    if (res.ok) {
-      const data = await res.json();
-      state.runs = data.runs || [];
-      state.connectionOk = true;
-    } else {
-      state.runs = [...INITIAL_RUNS];
-      state.connectionOk = false;
-    }
-  } catch (e) {
-    console.warn("JSONBlob load failed:", e);
-    state.runs = [...INITIAL_RUNS];
-    state.connectionOk = false;
-  }
-  state.loading = false;
-  render();
-}
-
-async function saveToBlob(runs) {
-  state.saving = true;
-  render();
-  const payload = JSON.stringify({ runs });
-
-  try {
-    if (state.blobId) {
-      // Update existing
-      await fetch(JSONBLOB_API + "/" + state.blobId, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: payload
-      });
-    } else {
-      // Create new blob
-      const res = await fetch(JSONBLOB_API, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: payload
-      });
-      if (res.ok) {
-        const loc = res.headers.get("Location") || "";
-        const id = loc.split("/").pop();
-        if (id) {
-          state.blobId = id;
-          window.location.hash = id;
-          state.connectionOk = true;
-        }
-      }
-    }
-  } catch (e) {
-    console.warn("JSONBlob save failed:", e);
-    showToast("Save failed \u2014 data stored locally only", true);
-  }
-  state.saving = false;
-  render();
-}
-
-// ============================================================
-// CLAUDE VISION OCR
-// ============================================================
-async function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result.split(",")[1];
-      resolve(base64);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-async function processScreenshot(file) {
-  state.showOcr = true;
-  state.ocrProgress = 20;
-  state.ocrStatus = "Uploading to Claude\u2026";
-  state.ocrResult = null;
-  render();
-
-  try {
-    const base64 = await fileToBase64(file);
-    const mediaType = file.type || "image/png";
-
-    state.ocrProgress = 50;
-    state.ocrStatus = "Reading screenshot\u2026";
-    render();
-
-    const today = new Date().toISOString().slice(0, 10);
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": CLAUDE_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true"
-      },
-      body: JSON.stringify({
-        model: CLAUDE_MODEL,
-        max_tokens: 256,
-        messages: [{
-          role: "user",
-          content: [
-            {
-              type: "image",
-              source: { type: "base64", media_type: mediaType, data: base64 }
-            },
-            {
-              type: "text",
-              text: `Extract the running data from this Strava screenshot. Today's date is ${today}. If the screenshot says "Today", use today's date. If it says "Yesterday", use yesterday's date. Return ONLY a JSON object with these fields (no markdown, no backticks, just raw JSON):
-{"distance": <number in km>, "pace": "<mm:ss>", "duration": "<e.g. 21m 46s>", "date": "<YYYY-MM-DD>", "time": "<HH:MM in 24h>"}`
-            }
-          ]
-        }]
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.text();
-      console.error("Claude API error:", err);
-      throw new Error("API error: " + res.status);
-    }
-
-    const data = await res.json();
-    const text = data.content?.[0]?.text || "";
-    console.log("Claude response:", text);
-
-    state.ocrProgress = 90;
-    state.ocrStatus = "Parsing\u2026";
-    render();
-
-    // Parse JSON from response (handle possible markdown wrapping)
-    let jsonStr = text.trim();
-    if (jsonStr.startsWith("```")) {
-      jsonStr = jsonStr.replace(/```json?\n?/g, "").replace(/```/g, "").trim();
-    }
-    const result = JSON.parse(jsonStr);
-
-    // Validate
-    if (!result.distance || isNaN(parseFloat(result.distance))) {
-      throw new Error("Invalid distance");
-    }
-    result.distance = parseFloat(result.distance);
-
-    state.ocrProgress = 100;
-    state.ocrStatus = "Done!";
-    state.ocrResult = result;
-    render();
-
-    // Auto-save after brief display
-    setTimeout(() => {
-      addRun(result);
-      state.showOcr = false;
-      render();
-      showToast(`Run added: ${result.distance} km`);
-    }, 1000);
-
-    return result;
-  } catch (e) {
-    console.error("Vision OCR error:", e);
-    state.showOcr = false;
-    state.showForm = true;
-    render();
-    showToast("Screenshot read failed \u2014 enter manually", true);
-    return null;
-  }
-}
-
-// ============================================================
-// RUN MANAGEMENT
-// ============================================================
-function addRun(data) {
-  const newRun = {
-    id: Date.now(),
-    date: data.date,
-    time: data.time || "00:00",
-    distance: parseFloat(data.distance) || 0,
-    pace: data.pace || "\u2014",
-    duration: data.duration || "\u2014",
-  };
-  state.runs = [...state.runs, newRun];
-  saveToBlob(state.runs);
-  render();
-}
-
-// ============================================================
-// TOAST
-// ============================================================
-function showToast(msg, isError) {
-  state.toast = { msg, isError };
-  render();
-  setTimeout(() => { state.toast = null; render(); }, 3000);
-}
-
-// ============================================================
-// EVENT HANDLERS
-// ============================================================
-function handleTitleTap() {
-  if (state.isAdmin) return;
-  state.tapCount++;
-  if (state.tapTimer) clearTimeout(state.tapTimer);
-  if (state.tapCount >= 5) {
-    state.tapCount = 0;
-    state.showPinModal = true;
-    render();
-    setTimeout(() => document.getElementById("pinInput")?.focus(), 100);
-    return;
-  }
-  state.tapTimer = setTimeout(() => { state.tapCount = 0; }, 2000);
-}
-
-function handlePinSubmit() {
-  const input = document.getElementById("pinInput");
-  const val = input ? input.value : "";
-  if (val === SECRET_PIN) {
-    state.isAdmin = true;
-    state.showPinModal = false;
-    state.pinError = false;
-    render();
-    showToast("Admin mode unlocked \u{1F513}");
-  } else {
-    state.pinError = true;
-    if (input) input.value = "";
-    render();
-  }
-}
-
-function handleFabClick() {
-  document.getElementById("fileInput").click();
-}
-
-function handleFileSelected(e) {
-  const file = e.target.files?.[0];
-  if (!file || !file.type.startsWith("image/")) return;
-  e.target.value = "";
-  processScreenshot(file);
-}
-
-function handleFormSubmit() {
-  const date = document.getElementById("fDate")?.value;
-  const time = document.getElementById("fTime")?.value;
-  const distance = document.getElementById("fDist")?.value;
-  const pace = document.getElementById("fPace")?.value;
-  const duration = document.getElementById("fDur")?.value;
-  if (!date || !distance) return;
-  addRun({ date, time, distance, pace, duration });
-  state.showForm = false;
-  render();
-  showToast(`Run added: ${distance} km`);
-}
+function fmtDate(d) { const dt = new Date(d + "T00:00:00"); return dt.getDate() + " " + dt.toLocaleDateString("en-IN", { month: "short" }); }
 
 // ============================================================
 // RENDER
 // ============================================================
 function render() {
   const app = document.getElementById("app");
-  const modals = document.getElementById("modals");
-  const streaks = calculateStreaks(state.runs);
+  const streaks = calculateStreaks(RUNS);
   const reversed = [...streaks].reverse();
   const current = streaks.length ? streaks[streaks.length - 1].streak : 0;
-  const totalDist = state.runs.reduce((s, r) => s + r.distance, 0);
+  const totalDist = RUNS.reduce((s, r) => s + r.distance, 0);
   const totalPrize = streaks.reduce((s, r) => s + calculatePrize(r.distance, r.streak), 0);
   const best = streaks.reduce((m, r) => Math.max(m, r.streak), 0);
 
-  if (state.loading) {
-    app.innerHTML = `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;color:#6b7280">
-        <div style="width:32px;height:32px;border:3px solid #333;border-top-color:#FC4C02;border-radius:50%;animation:spin 1s linear infinite"></div>
-        <div style="font-size:14px">Loading leaderboard\u2026</div>
-      </div>`;
-    modals.innerHTML = "";
-    return;
-  }
+  let rulesExpanded = false;
 
-  // Main content
   app.innerHTML = `
-    <!-- Status bar -->
-    <div class="status-bar">
-      <span class="status-dot ${state.connectionOk ? 'ok' : state.blobId ? 'err' : 'loading'}"></span>
-      ${state.connectionOk ? 'Shared leaderboard \u2014 updates live' : state.blobId ? 'Offline mode \u2014 data may not sync' : 'Local mode \u2014 tap + to set up sharing'}
-      ${state.saving ? '<span style="color:#FC4C02;margin-left:4px">\u00B7 saving\u2026</span>' : ''}
-    </div>
-
     <!-- Stat cards -->
     <div class="stats-row">
-      <div class="stat-card" style="border-color:#3b82f644">
+      <div class="stat-card" style="border:1px solid #3b82f644">
         <div class="stat-label">\u{1F3C3} Total Runs</div>
-        <div class="stat-value" style="color:#3b82f6">${state.runs.length}</div>
+        <div class="stat-value" style="color:#3b82f6">${RUNS.length}</div>
         <div class="stat-sub">${totalDist.toFixed(1)} km total</div>
       </div>
-      <div class="stat-card" style="border-color:${streakColor(current)}44">
+      <div class="stat-card" style="border:1px solid ${streakColor(current)}44">
         <div class="stat-label">\u{1F525} Curr Streak</div>
         <div class="stat-value" style="color:${streakColor(current)}">${current} ${streakEmoji(current)}</div>
         <div class="stat-sub">Best: ${best} days</div>
       </div>
-      <div class="stat-card" style="border-color:#f59e0b44">
+      <div class="stat-card" style="border:1px solid #f59e0b44">
         <div class="stat-label">\u{1F3C6} Total Prize</div>
         <div class="stat-value" style="color:#f59e0b">\u20B9${totalPrize.toLocaleString("en-IN")}</div>
         <div class="stat-sub">Keep running!</div>
@@ -495,16 +127,13 @@ function render() {
 
     <!-- Run History -->
     <div>
-      <div class="section-title" id="runHistoryTitle">
+      <div class="section-title">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FC4C02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         Run History
-        ${state.isAdmin ? '<button class="add-run-btn" id="addRunBtn">+ Add Run</button>' : ''}
       </div>
-
       ${reversed.length === 0 ? `
         <div class="empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-          <div style="font-size:15px">No runs yet \u2014 upload a Strava screenshot!</div>
+          <div style="font-size:15px">No runs yet!</div>
         </div>
       ` : `
         <div class="table-wrap">
@@ -533,189 +162,56 @@ function render() {
     </div>
 
     <!-- Prize Rules -->
-    <div class="rules-panel">
+    <div class="rules-panel" id="rulesPanel">
       <button class="rules-toggle" id="rulesToggle">
         <span style="display:flex;align-items:center;gap:8px">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
           Prize Rules & Streak Logic
         </span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          ${state.rulesExpanded ? '<polyline points="18 15 12 9 6 15"/>' : '<polyline points="6 9 12 15 18 9"/>'}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="rulesChevron">
+          <polyline points="6 9 12 15 18 9"/>
         </svg>
       </button>
-      ${state.rulesExpanded ? `
-        <div class="rules-body">
-          <div class="streak-box">
-            <div class="streak-box-title">Streak Rules</div>
-            <div style="font-size:12px">Run daily to build streak. Miss <strong style="color:#fff">1 day</strong>: streak -1. Miss <strong style="color:#fff">2+ days</strong>: reset to 0.</div>
-          </div>
-          <table class="prize-table">
-            <thead>
-              <tr>
-                <th style="text-align:left;color:#f59e0b">Distance</th>
-                <th style="text-align:center;color:#6b7280">Streak >2</th>
-                <th style="text-align:center;color:#6b7280">Streak >5</th>
-                <th style="text-align:center;color:#6b7280">Streak >10</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td style="font-weight:600;color:#ccc">&lt; 3.5 km</td><td style="text-align:center;color:#444">\u20B90</td><td style="text-align:center;color:#444">\u20B90</td><td style="text-align:center;color:#444">\u20B90</td></tr>
-              <tr><td style="font-weight:600;color:#ccc">3.5 \u2013 5 km</td><td style="text-align:center;color:#e5e5e5">\u20B9350</td><td style="text-align:center;color:#e5e5e5">\u20B9500</td><td style="text-align:center;color:#e5e5e5">\u20B9700</td></tr>
-              <tr><td style="font-weight:600;color:#ccc">5 \u2013 10 km</td><td style="text-align:center;color:#e5e5e5">\u20B9700</td><td style="text-align:center;color:#e5e5e5">\u20B91,000</td><td style="text-align:center;color:#e5e5e5">\u20B91,400</td></tr>
-              <tr><td style="font-weight:600;color:#ccc">&gt; 10 km</td><td style="text-align:center;color:#e5e5e5">\u20B91,050</td><td style="text-align:center;color:#e5e5e5">\u20B91,500</td><td style="text-align:center;color:#e5e5e5">\u20B92,100</td></tr>
-            </tbody>
-          </table>
+      <div class="rules-body" id="rulesBody" style="display:none">
+        <div class="streak-box">
+          <div class="streak-box-title">Streak Rules</div>
+          <div style="font-size:12px">Run daily to build streak. Miss <strong style="color:#fff">1 day</strong>: streak -1. Miss <strong style="color:#fff">2+ days</strong>: reset to 0.</div>
         </div>
-      ` : ''}
+        <table class="prize-table">
+          <thead>
+            <tr>
+              <th style="text-align:left;color:#f59e0b">Distance</th>
+              <th style="text-align:center;color:#6b7280">Streak >2</th>
+              <th style="text-align:center;color:#6b7280">Streak >5</th>
+              <th style="text-align:center;color:#6b7280">Streak >10</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-weight:600;color:#ccc">&lt; 3.5 km</td><td style="text-align:center;color:#444">\u20B90</td><td style="text-align:center;color:#444">\u20B90</td><td style="text-align:center;color:#444">\u20B90</td></tr>
+            <tr><td style="font-weight:600;color:#ccc">3.5 \u2013 5 km</td><td style="text-align:center;color:#e5e5e5">\u20B9350</td><td style="text-align:center;color:#e5e5e5">\u20B9500</td><td style="text-align:center;color:#e5e5e5">\u20B9700</td></tr>
+            <tr><td style="font-weight:600;color:#ccc">5 \u2013 10 km</td><td style="text-align:center;color:#e5e5e5">\u20B9700</td><td style="text-align:center;color:#e5e5e5">\u20B91,000</td><td style="text-align:center;color:#e5e5e5">\u20B91,400</td></tr>
+            <tr><td style="font-weight:600;color:#ccc">&gt; 10 km</td><td style="text-align:center;color:#e5e5e5">\u20B91,050</td><td style="text-align:center;color:#e5e5e5">\u20B91,500</td><td style="text-align:center;color:#e5e5e5">\u20B92,100</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="footer">Running Leaderboard \u2022 Updated via Strava screenshots</div>
+    <div class="footer">Running Leaderboard \u2022 Dhananjay S</div>
   `;
 
-  // Build modals
-  let modalHTML = "";
-
-  // Toast
-  if (state.toast) {
-    modalHTML += `<div class="toast ${state.toast.isError ? 'error' : ''}">${state.toast.msg}</div>`;
-  }
-
-  // PIN Modal
-  if (state.showPinModal) {
-    modalHTML += `
-      <div class="modal-overlay" id="pinOverlay">
-        <div class="modal-box">
-          <div style="font-size:28px;margin-bottom:8px">\u{1F510}</div>
-          <div style="font-weight:700;font-size:16px;margin-bottom:4px;color:#fff">Admin Access</div>
-          <div style="font-size:12px;color:#555;margin-bottom:20px">Enter PIN to add runs</div>
-          <input type="password" inputmode="numeric" maxlength="4" id="pinInput" class="pin-input ${state.pinError ? 'error' : ''}" placeholder="\u2022\u2022\u2022\u2022">
-          ${state.pinError ? '<div style="color:#ef4444;font-size:12px;margin-top:8px">Incorrect PIN. Try again.</div>' : ''}
-          <button class="btn btn-primary" style="margin-top:16px" id="pinSubmitBtn">Unlock</button>
-        </div>
-      </div>`;
-  }
-
-  // OCR Progress
-  if (state.showOcr) {
-    modalHTML += `
-      <div class="modal-overlay">
-        <div class="ocr-progress">
-          <div style="font-size:28px;margin-bottom:8px">\u{1F4F7}</div>
-          <div style="font-weight:700;font-size:16px;color:#fff;margin-bottom:4px">Reading Screenshot</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${state.ocrProgress}%"></div></div>
-          <div class="ocr-status">${state.ocrStatus}</div>
-          ${state.ocrResult ? `
-            <div class="ocr-result">
-              <div class="ocr-field"><span class="ocr-field-label">Distance</span><span class="ocr-field-value">${state.ocrResult.distance} km</span></div>
-              <div class="ocr-field"><span class="ocr-field-label">Pace</span><span class="ocr-field-value">${state.ocrResult.pace || '\u2014'}</span></div>
-              <div class="ocr-field"><span class="ocr-field-label">Duration</span><span class="ocr-field-value">${state.ocrResult.duration || '\u2014'}</span></div>
-              <div class="ocr-field"><span class="ocr-field-label">Date</span><span class="ocr-field-value">${state.ocrResult.date} ${state.ocrResult.time}</span></div>
-            </div>
-          ` : ''}
-        </div>
-      </div>`;
-  }
-
-  // Manual Form
-  if (state.showForm) {
-    const today = new Date().toISOString().slice(0, 10);
-    modalHTML += `
-      <div class="modal-bottom"><div class="modal-overlay" id="formOverlay">
-        <div class="modal-sheet">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-            <h3 style="margin:0;font-size:16px;font-weight:700;color:#FC4C02">Add Run</h3>
-            <button id="formCloseBtn" style="background:none;border:none;color:#666;cursor:pointer;padding:4px;font-size:18px">\u2715</button>
-          </div>
-          <div class="form-grid">
-            <div class="form-group"><label>Date</label><input type="date" id="fDate" value="${today}"></div>
-            <div class="form-group"><label>Time</label><input type="time" id="fTime"></div>
-            <div class="form-group"><label>Distance (km)</label><input type="number" step="0.01" id="fDist" placeholder="e.g. 5.2"></div>
-            <div class="form-group"><label>Pace (/km)</label><input type="text" id="fPace" placeholder="e.g. 5:45"></div>
-            <div class="form-group form-full"><label>Duration</label><input type="text" id="fDur" placeholder="e.g. 29m 54s"></div>
-          </div>
-          <button class="btn btn-primary" style="margin-top:16px" id="formSubmitBtn">Save Run</button>
-        </div>
-      </div></div>`;
-  }
-
-  // FAB (admin only, not during modals)
-  if (state.isAdmin && !state.showForm && !state.showOcr && !state.showPinModal) {
-    modalHTML += `<button class="fab" id="fabBtn">+</button>`;
-  }
-
-  modals.innerHTML = modalHTML;
-
-  // Attach event listeners
-  bindEvents();
-}
-
-function bindEvents() {
-  // Run History title tap
-  document.getElementById("runHistoryTitle")?.addEventListener("click", handleTitleTap);
-
-  // Add Run button (admin inline)
-  document.getElementById("addRunBtn")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    handleFabClick();
-  });
-
   // Rules toggle
-  document.getElementById("rulesToggle")?.addEventListener("click", () => {
-    state.rulesExpanded = !state.rulesExpanded;
-    render();
+  document.getElementById("rulesToggle").addEventListener("click", () => {
+    const body = document.getElementById("rulesBody");
+    const chevron = document.getElementById("rulesChevron");
+    const visible = body.style.display !== "none";
+    body.style.display = visible ? "none" : "block";
+    chevron.innerHTML = visible
+      ? '<polyline points="6 9 12 15 18 9"/>'
+      : '<polyline points="18 15 12 9 6 15"/>';
   });
-
-  // PIN modal
-  document.getElementById("pinOverlay")?.addEventListener("click", (e) => {
-    if (e.target.id === "pinOverlay") {
-      state.showPinModal = false;
-      state.pinError = false;
-      render();
-    }
-  });
-  document.getElementById("pinInput")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") handlePinSubmit();
-  });
-  document.getElementById("pinSubmitBtn")?.addEventListener("click", handlePinSubmit);
-
-  // Form modal
-  document.getElementById("formOverlay")?.addEventListener("click", (e) => {
-    if (e.target.id === "formOverlay") {
-      state.showForm = false;
-      render();
-    }
-  });
-  document.getElementById("formCloseBtn")?.addEventListener("click", () => {
-    state.showForm = false;
-    render();
-  });
-  document.getElementById("formSubmitBtn")?.addEventListener("click", handleFormSubmit);
-
-  // FAB
-  document.getElementById("fabBtn")?.addEventListener("click", handleFabClick);
-
-  // File input
-  document.getElementById("fileInput").addEventListener("change", handleFileSelected);
 }
 
-// ============================================================
-// INIT
-// ============================================================
-function init() {
-  // Check Tesseract availability
-  state.tesseractReady = typeof Tesseract !== "undefined" && !window._tesseractFailed;
-  console.log("Tesseract ready:", state.tesseractReady);
-
-  render();
-  loadFromBlob();
-
-  // Poll for updates every 30s
-  setInterval(() => {
-    if (state.blobId && !state.saving) loadFromBlob();
-  }, 30000);
-}
-
-init();
+render();
 </script>
 </body>
 </html>

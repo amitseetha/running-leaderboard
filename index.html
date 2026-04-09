@@ -8,14 +8,14 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0f0f1a;color:#e5e5e5;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;overflow-x:hidden}
 .container{max-width:800px;margin:0 auto;padding:20px 16px 40px}
-
+ 
 /* Stat Cards */
 .stats-row{display:flex;gap:8px;margin-bottom:20px;width:100%}
 .stat-card{background:linear-gradient(135deg,#1e1e2e,#2a2a3e);border-radius:12px;padding:10px;flex:1 1 0%;min-width:0;overflow:hidden}
 .stat-label{color:#6b7280;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;white-space:nowrap}
 .stat-value{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stat-sub{color:#555;font-size:10px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
+ 
 /* Table */
 .section-title{font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .table-wrap{background:#1a1a2a;border-radius:14px;border:1px solid #252535;overflow-x:auto}
@@ -26,7 +26,7 @@ tr.data-row{border-bottom:1px solid #252535;transition:background .15s}
 tr.data-row:last-child{border-bottom:none}
 tr.data-row:hover{background:#222235}
 .empty-state{text-align:center;padding:48px 20px;color:#555}
-
+ 
 /* Prize Rules */
 .rules-panel{background:#1a1a2a;border-radius:12px;border:1px solid #333;margin-top:24px;overflow:hidden}
 .rules-toggle{width:100%;padding:14px 20px;background:none;border:none;color:#ccc;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit}
@@ -39,14 +39,14 @@ tr.data-row:hover{background:#222235}
 .prize-table td{padding:8px 12px;border-bottom:1px solid #252535;border-right:1px solid #252535}
 .prize-table td:last-child{border-right:none}
 .prize-table tr:last-child td{border-bottom:none}
-
+ 
 .footer{text-align:center;margin-top:24px;padding:16px 0;color:#333;font-size:12px}
 </style>
 </head>
 <body>
-
+ 
 <div class="container" id="app"></div>
-
+ 
 <script>
 // ============================================================
 // RUNS DATA — Add new runs here
@@ -54,8 +54,9 @@ tr.data-row:hover{background:#222235}
 const RUNS = [
   { id: 1, date: "2026-04-07", time: "18:24", distance: 3.55, pace: "6:07", duration: "21m 46s" },
   { id: 2, date: "2026-04-08", time: "21:30", distance: 7.60, pace: "11:26", duration: "1h 26m" },
+  { id: 3, date: "2026-04-09", time: "18:54", distance: 5.21, pace: "6:24", duration: "33m 21s" },
 ];
-
+ 
 // ============================================================
 // STREAK & PRIZE CALCULATION
 // ============================================================
@@ -78,7 +79,7 @@ function calculateStreaks(runs) {
   }
   return result;
 }
-
+ 
 function calculatePrize(dist, streak) {
   if (dist < 3.5) return 0;
   let base = streak > 10 ? 700 : streak > 5 ? 500 : streak > 2 ? 350 : 0;
@@ -87,11 +88,11 @@ function calculatePrize(dist, streak) {
   if (dist > 5) return base * 2;
   return base;
 }
-
+ 
 function streakColor(s) { return s > 10 ? "#f59e0b" : s > 5 ? "#f97316" : s > 2 ? "#ef4444" : "#6b7280"; }
 function streakEmoji(s) { return s > 10 ? "\u{1F525}\u{1F525}\u{1F525}" : s > 5 ? "\u{1F525}\u{1F525}" : s > 2 ? "\u{1F525}" : ""; }
 function fmtDate(d) { const dt = new Date(d + "T00:00:00"); return dt.getDate() + " " + dt.toLocaleDateString("en-IN", { month: "short" }); }
-
+ 
 // ============================================================
 // RENDER
 // ============================================================
@@ -103,9 +104,9 @@ function render() {
   const totalDist = RUNS.reduce((s, r) => s + r.distance, 0);
   const totalPrize = streaks.reduce((s, r) => s + calculatePrize(r.distance, r.streak), 0);
   const best = streaks.reduce((m, r) => Math.max(m, r.streak), 0);
-
+ 
   let rulesExpanded = false;
-
+ 
   app.innerHTML = `
     <!-- Stat cards -->
     <div class="stats-row">
@@ -125,7 +126,7 @@ function render() {
         <div class="stat-sub">Keep running!</div>
       </div>
     </div>
-
+ 
     <!-- Run History -->
     <div>
       <div class="section-title">
@@ -161,7 +162,7 @@ function render() {
         </div>
       `}
     </div>
-
+ 
     <!-- Prize Rules -->
     <div class="rules-panel" id="rulesPanel">
       <button class="rules-toggle" id="rulesToggle">
@@ -196,10 +197,10 @@ function render() {
         </table>
       </div>
     </div>
-
+ 
     <div class="footer">Running Leaderboard \u2022 Dhananjay S</div>
   `;
-
+ 
   // Rules toggle
   document.getElementById("rulesToggle").addEventListener("click", () => {
     const body = document.getElementById("rulesBody");
@@ -211,7 +212,7 @@ function render() {
       : '<polyline points="18 15 12 9 6 15"/>';
   });
 }
-
+ 
 render();
 </script>
 </body>

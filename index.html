@@ -58,6 +58,7 @@ const RUNS = [
   { id: 4, date: "2026-04-10", time: "19:49", distance: 5.31, pace: "6:55", duration: "36m 46s" },
   { id: 5, date: "2026-04-11", time: "19:16", distance: 5.02, pace: "6:56", duration: "34m 50s" },
   { id: 6, date: "2026-04-12", time: "20:54", distance: 4.02, pace: "6:54", duration: "27m 48s" },
+  { id: 7, date: "2026-04-13", time: "21:19", distance: 7.56, pace: "12:24", duration: "1h 33m" },
 ];
  
 // ============================================================
@@ -83,12 +84,15 @@ function calculateStreaks(runs) {
   return result;
 }
  
-function calculatePrize(dist, streak) {
-  if (dist < 3.5) return 0;
+function calculatePrize(dist, streak, pace) {
+  // If pace > 8 min/km, it's a walk — count half distance
+  const paceMin = pace ? parseFloat(pace.split(":")[0]) + parseFloat(pace.split(":")[1] || 0) / 60 : 0;
+  const effectiveDist = paceMin > 8 ? dist / 2 : dist;
+  if (effectiveDist < 3.5) return 0;
   let base = streak > 10 ? 700 : streak > 5 ? 500 : streak > 2 ? 350 : 0;
   if (!base) return 0;
-  if (dist > 10) return base * 3;
-  if (dist > 5) return base * 2;
+  if (effectiveDist > 10) return base * 3;
+  if (effectiveDist > 5) return base * 2;
   return base;
 }
  
@@ -105,7 +109,7 @@ function render() {
   const reversed = [...streaks].reverse();
   const current = streaks.length ? streaks[streaks.length - 1].streak : 0;
   const totalDist = RUNS.reduce((s, r) => s + r.distance, 0);
-  const totalPrize = streaks.reduce((s, r) => s + calculatePrize(r.distance, r.streak), 0);
+  const totalPrize = streaks.reduce((s, r) => s + calculatePrize(r.distance, r.streak, r.pace), 0);
   const best = streaks.reduce((m, r) => Math.max(m, r.streak), 0);
  
   let rulesExpanded = false;
@@ -150,10 +154,13 @@ function render() {
             </thead>
             <tbody>
               ${reversed.map(r => {
-                const prize = calculatePrize(r.distance, r.streak);
+                const paceMin = r.pace ? parseFloat(r.pace.split(":")[0]) + parseFloat(r.pace.split(":")[1] || 0) / 60 : 0;
+                const isWalk = paceMin > 8;
+                const effectiveDist = isWalk ? (r.distance / 2).toFixed(2) : r.distance;
+                const prize = calculatePrize(r.distance, r.streak, r.pace);
                 return `<tr class="data-row">
                   <td style="color:#e5e5e5;font-weight:600">${fmtDate(r.date)} ${r.time}</td>
-                  <td style="font-weight:700;color:#fff">${r.distance} km</td>
+                  <td style="font-weight:700;color:#fff">${effectiveDist} km${isWalk ? ' 🚶' : ''}</td>
                   <td style="color:#9ca3af">${r.pace}</td>
                   <td style="color:#9ca3af">${r.duration}</td>
                   <td style="font-weight:700;color:${streakColor(r.streak)}">${r.streak} ${streakEmoji(r.streak)}</td>
